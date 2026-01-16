@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目业务 - 四叶草堂 | 重塑家园 共生发展</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #5a7d5a;
+            --primary-green-light: #7a9d7a;
+            --primary-green-dark: #3d5a3d;
+            --bg-light: #f8f9f7;
+            --bg-cream: #f5f5f0;
+            --text-dark: #2c3e2c;
+            --text-gray: #5a6b5a;
+            --text-light: #8a9a8a;
+            --white: #ffffff;
+            --shadow: rgba(90, 125, 90, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 14px;
+            line-height: 1.9;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            font-weight: 300;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0 60px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 20px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar-logo img {
+            height: 60px;
+        }
+
+        .navbar-logo-text {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-green-dark);
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-green);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-green);
+            transition: width 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 60vh;
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('images/头图-项目业务.jpg') center center/cover no-repeat;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(90, 125, 90, 0.3);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--white);
+            max-width: 900px;
+            padding: 0 40px;
+        }
+
+        .hero-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: 6px;
+            margin-bottom: 25px;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            opacity: 0.9;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        section {
+            padding: 100px 60px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-green-dark);
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-light);
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        /* Business Types Section */
+        .business-types-section {
+            background: var(--white);
+        }
+
+        .business-types-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .business-types-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .business-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 0;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .business-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .business-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            margin-bottom: 0;
+            display: block;
+        }
+
+        .business-card-content {
+            padding: 25px 20px;
+        }
+
+        .business-card h4 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+        }
+
+        .business-card p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-gray);
+            margin: 0;
+        }
+
+        /* Partnership Section */
+        .partnership-section {
+            background: var(--bg-light);
+        }
+
+        .partnership-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Cases Section */
+        .cases-section {
+            background: var(--white);
+        }
+
+        .cases-content {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .case-card {
+            background: var(--bg-cream);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .case-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px var(--shadow);
+        }
+
+        .case-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .case-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .case-title {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .case-title h4 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-green-dark);
+            color: var(--white);
+            padding: 60px 60px 30px;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-logos {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            margin-bottom: 35px;
+        }
+
+        .footer-logos img {
+            height: 68px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        .footer-info {
+            margin-bottom: 35px;
+        }
+
+        .footer-info p {
+            font-size: 13px;
+            line-height: 2;
+            opacity: 0.9;
+        }
+
+        .footer-qr {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .footer-qr-item {
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .footer-qr-item img {
+            width: 90px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .footer-qr-item p {
+            font-size: 12px;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 11px;
+            opacity: 0.7;
+        }
+
+        .footer-bottom a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .navbar {
+                padding: 0 40px;
+            }
+
+            section {
+                padding: 80px 40px;
+            }
+
+            .business-types-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .partnership-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cases-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .hero-title {
+                font-size: 36px;
+                letter-spacing: 3px;
+            }
+
+            .hero-subtitle {
+                font-size: 13px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .business-types-grid,
+            .cases-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-qr {
+                flex-direction: column;
+                gap: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <img src="images/四叶草堂LOGO.png" alt="四叶草堂">
+            <span class="navbar-logo-text">四叶草堂</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">团队介绍</a></li>
+            <li><a href="philosophy.html">理念路径</a></li>
+            <li><a href="projects.html" class="active">项目业务</a></li>
+            <li><a href="blossom.html">花开中国</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">项目业务</h1>
+            <p class="hero-subtitle">携手合作伙伴，共创社区美好未来</p>
+        </div>
+    </section>
+
+    <!-- Business Types Section -->
+    <section class="business-types-section" id="business-types">
+        <div class="section-header">
+            <h2 class="section-title">业务类型</h2>
+        </div>
+        <div class="business-types-content">
+            <div class="business-types-grid">
+                <div class="business-card">
+                    <img src="images/规划咨询.png" alt="规划咨询">
+                    <div class="business-card-content">
+                        <h4>规划咨询</h4>
+                        <p>通过对场地走访调研，梳理空间资源、社会资源，结合城市发展战略和业务需求制定规划策略，提供基于场地空间与公众参与的解决方案。</p>
+                    </div>
+                </div>
+
+                <div class="business-card">
+                    <img src="images/系列培训.jpg" alt="系列培训">
+                    <div class="business-card-content">
+                        <h4>系列培训</h4>
+                        <p>开展多样化的系列工作坊和讲座，为市级/区级/街道级政府、社会组织、居民、专业者提供理论与实践结合的培训服务。</p>
+                    </div>
+                </div>
+
+                <div class="business-card">
+                    <img src="images/专项行动1.jpg" alt="专项行动">
+                    <div class="business-card-content">
+                        <h4>专项行动</h4>
+                        <p>发动链接社会资源（例如跨部门的政府合作、校园合作、社会招募等），组织专业力量进入社区，并开展专项行动。</p>
+                    </div>
+                </div>
+
+                <div class="business-card">
+                    <img src="images/实操手册.jpg" alt="实操手册">
+                    <div class="business-card-content">
+                        <h4>实操手册</h4>
+                        <p>将在地化的实践经验进行整理和输出，协助多方利益者达成理念共识，赋能第三方组织持续展开执行具体行动。</p>
+                    </div>
+                </div>
+
+                <div class="business-card">
+                    <img src="images/赛事节日.webp" alt="赛事节日">
+                    <div class="business-card-content">
+                        <h4>赛事节日</h4>
+                        <p>以公共空间为空间载体举办节事活动，包括发动设计营建竞赛，既是面向公众扩大宣传的途径，又是阶段性成果展示的重要环节。</p>
+                    </div>
+                </div>
+
+                <div class="business-card">
+                    <img src="images/场地运维.jpg" alt="场地运维">
+                    <div class="business-card-content">
+                        <h4>场地运维</h4>
+                        <p>基于社区营造、共建参与等理念，提供社区花园等公共服务场所的运维管理支持服务，包括共建召集、活动策划、方案共创、机制培育等内容。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnership Section -->
+    <section class="partnership-section" id="partnership">
+        <div class="section-header">
+            <h2 class="section-title">合作方向</h2>
+        </div>
+        <div class="partnership-content">
+            
+            <!-- Government Partnership - 图左文右 -->
+            <div class="partnership-block" style="display: flex; align-items: center; margin-bottom: 80px; gap: 60px;">
+                <div style="flex: 1;">
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="font-size: 28px; font-weight: 700; color: var(--primary-green); margin-bottom: 10px; font-family: 'Noto Serif SC', serif;">FOR GOVERNMENT</h3>
+                        <h4 style="font-size: 20px; font-weight: 500; color: var(--text-gray); margin-bottom: 20px;">政府与城市规划者</h4>
+                        <p style="font-size: 15px; line-height: 1.8; color: var(--text-gray);">协助政府部门践行"人民城市"理念，通过自下而上的公众参与，有效提升基层治理效能，构建和谐的社区共同体。</p>
+                    </div>
+                    <div>
+                        <h5 style="font-size: 16px; font-weight: 600; color: var(--text-dark); margin-bottom: 15px;">服务内容：</h5>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="font-size: 14px; line-height: 1.6; color: var(--text-gray); margin-bottom: 8px; padding-left: 15px; position: relative;">
+                                <span style="position: absolute; left: 0; top: 8px; width: 6px; height: 6px; background: var(--primary-green); border-radius: 50%;"></span>
+                                顶层设计与咨询：制定参与式社区治理行动计划与制度框架
+                            </li>
+                            <li style="font-size: 14px; line-height: 1.6; color: var(--text-gray); margin-bottom: 8px; padding-left: 15px; position: relative;">
+                                <span style="position: absolute; left: 0; top: 8px; width: 6px; height: 6px; background: var(--primary-green); border-radius: 50%;"></span>
+                                人才培养与赋能：培育多层次的"社区规划师"队伍
+                            </li>
+                            <li style="font-size: 14px; line-height: 1.6; color: var(--text-gray); margin-bottom: 0; padding-left: 15px; position: relative;">
+                                <span style="position: absolute; left: 0; top: 8px; width: 6px; height: 6px; background: var(--primary-green); border-radius: 50%;"></span>
+                                标准化模式推广：旧小区改造中的可复制花园网络建设
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <img src="images/For government.jpeg" alt="政府合作" style="width: 100%; height: auto; border-radius: 12px;">
+                </div>
+            </div>
+
+            <!-- Developer Partnership - 图右文左 -->
+            <div class="partnership-block" style="display: flex; align-items: center; margin-bottom: 80px; gap: 60px; flex-direction: row-reverse;">
+                <div style="flex: 1;">
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="font-size: 28px; font-weight: 700; color: var(--primary-green); margin-bottom: 10px; font-family: 'Noto Serif SC', serif;">FOR DEVELOPERS</h3>
+                        <h4 style="font-size: 20px; font-weight: 500; color: var(--text-gray); margin-bottom: 20px;">地产开发与运营</h4>
+                        <p style="font-size: 15px; line-height: 1.8; color: var(--text-gray);">在传统产品逻辑外注入社区营造活力，提升品牌美誉度，满足ESG要求，让地产项目成为有温度的家园。</p>
+                    </div>
+                    <div>
+                        <h5 style="font-size: 16px; font-weight: 600; color: var(--text-dark); margin-bottom: 15px;">服务内容：</h5>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="font-size: 14px; line-height: 1.6; color: var(--text-gray); margin-bottom: 8px; padding-left: 15px; position: relative;">
+                                <span style="position: absolute; left: 0; top: 8px; width: 6px; height: 6px; background: var(--primary-green); border-radius: 50%;"></span>
+                                前置性社区营造（交房前）：建立"公+民+学"三方合作架构，提前注入共同体基因
+                            </li>
+                            <li style="font-size: 14px; line-height: 1.6; color: var(--text-gray); margin-bottom: 0; padding-left: 15px; position: relative;">
+                                <span style="position: absolute; left: 0; top: 8px; width: 6px; height: 6px; background: var(--primary-green); border-radius: 50%;"></span>
+                                轻量化社区运营（交房后）：协助建立居民自运营机制，孵化在地组织
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <img src="images/For developers1.jpg" alt="地产开发" style="width: 100%; height: auto; border-radius: 12px;">
+                </div>
+            </div>
+
+            <!-- Enterprise Partnership - 图左文右 -->
+            <div class="partnership-block" style="display: flex; align-items: center; margin-bottom: 0; gap: 60px;">
+                <div style="flex: 1;">
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="font-size: 28px; font-weight: 700; color: var(--primary-green); margin-bottom: 10px; font-family: 'Noto Serif SC', serif;">FOR ENTERPRISE</h3>
+                        <h4 style="font-size: 20px; font-weight: 500; color: var(--text-gray); margin-bottom: 20px;">企业与基金会</h4>
+                        <p style="font-size: 15px; line-height: 1.8; color: var(--text-gray);">凭借广泛的社区网络和专业能力，成为企业和基金会理想的社会创新合作伙伴，助力ESG与品牌影响力。</p>
+                    </div>
+                    <div>
+                        <h5 style="font-size: 16px; font-weight: 600; color: var(--text-dark); margin-bottom: 15px;">服务内容：</h5>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="font-size: 14px; line-height: 1.6; color: var(--text-gray); margin-bottom: 8px; padding-left: 15px; position: relative;">
+                                <span style="position: absolute; left: 0; top: 8px; width: 6px; height: 6px; background: var(--primary-green); border-radius: 50%;"></span>
+                                ESG活动承接：定制员工志愿者、团队共建等活动
+                            </li>
+                            <li style="font-size: 14px; line-height: 1.6; color: var(--text-gray); margin-bottom: 8px; padding-left: 15px; position: relative;">
+                                <span style="position: absolute; left: 0; top: 8px; width: 6px; height: 6px; background: var(--primary-green); border-radius: 50%;"></span>
+                                公益项目合作：设计并发起创新公益项目，如"种子基金"计划
+                            </li>
+                            <li style="font-size: 14px; line-height: 1.6; color: var(--text-gray); margin-bottom: 0; padding-left: 15px; position: relative;">
+                                <span style="position: absolute; left: 0; top: 8px; width: 6px; height: 6px; background: var(--primary-green); border-radius: 50%;"></span>
+                                品牌跨界联动：通过艺术装置、展览等形式提升品牌社会形象
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <img src="images/For enterprise1.jpg" alt="企业合作" style="width: 100%; height: auto; border-radius: 12px;">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Cases Section -->
+    <section class="cases-section" id="cases">
+        <div class="section-header">
+            <h2 class="section-title">精选案例</h2>
+        </div>
+        <div class="cases-content">
+            <div class="cases-grid">
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="images/创智农园大.jpeg" alt="创智农园">
+                    </div>
+                    <div class="case-title">
+                        <h4>创智农园</h4>
+                    </div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="images/火车菜园.jpg" alt="火车菜园">
+                    </div>
+                    <div class="case-title">
+                        <h4>火车菜园</h4>
+                    </div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="images/东明路街道.jpg" alt="东明路街道">
+                    </div>
+                    <div class="case-title">
+                        <h4>东明路街道</h4>
+                    </div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="images/南宁老友花园.jpg" alt="南宁老友花园">
+                    </div>
+                    <div class="case-title">
+                        <h4>南宁老友花园</h4>
+                    </div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="images/徐家汇街道大.jpeg" alt="徐家汇街道">
+                    </div>
+                    <div class="case-title">
+                        <h4>徐家汇街道</h4>
+                    </div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="images/万科理想之地大.jpeg" alt="万科理想之地">
+                    </div>
+                    <div class="case-title">
+                        <h4>万科理想之地</h4>
+                    </div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="images/保利时光.jpeg" alt="保利时光草堂">
+                    </div>
+                    <div class="case-title">
+                        <h4>保利时光草堂</h4>
+                    </div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="images/花开乌市.jpeg" alt="花开乌市">
+                    </div>
+                    <div class="case-title">
+                        <h4>花开乌市</h4>
+                    </div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="images/和平公园自然中心大.jpeg" alt="和平公园自然中心">
+                    </div>
+                    <div class="case-title">
+                        <h4>和平公园自然中心</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logos">
+                <img src="images/四叶草堂LOGO.png" alt="四叶草堂">
+                <img src="images/同济实验室logo.png" alt="同济实验中心">
+            </div>
+            <div class="footer-info">
+                <p>四叶草堂社区规划设计营造促进中心 | 同济大学社区花园与社区营造实验中心</p>
+                <p>重塑家园 共生发展</p>
+            </div>
+            <div class="footer-contact" style="margin-bottom: 20px; font-size: 13px; line-height: 2; color: rgba(255,255,255,0.8);">
+                <p>联系邮箱：siyecaotang2014@163.com</p>
+                <p>办公地址：上海市杨浦区大学路248号702室</p>
+            </div>
+            <div class="footer-qr">
+                <div class="footer-qr-item">
+                    <img src="images/四叶草堂联系人.png" alt="微信联系人">
+                    <p>微信联系人</p>
+                </div>
+                <div class="footer-qr-item">
+                    <img src="images/四叶草堂公众号.png" alt="四叶草堂公众号">
+                    <p>微信公众号<br>（四叶草堂）</p>
+                </div>
+                <div class="footer-qr-item">
+                    <img src="images/社区花园公众号.png" alt="社区花园公众号">
+                    <p>微信公众号<br>（社区花园）</p>
+                </div>
+                <div class="footer-qr-item">
+                    <a href="https://www.xiaohongshu.com/user/profile/6295bf6600000000210275df" target="_blank">
+                        <img src="images/四叶草堂小红书.png" alt="四叶草堂小红书">
+                    </a>
+                    <p>小红书<br>（四叶草堂）</p>
+                </div>
+                <div class="footer-qr-item">
+                    <a href="https://xhslink.com/m/AlTqnYg854E" target="_blank">
+                        <img src="images/社区花园小红书.png" alt="社区花园小红书">
+                    </a>
+                    <p>小红书<br>（社区花园与社区营造）</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>©2025 上海市杨浦四叶草堂社区规划设计营造促进中心 | <a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备2023004347号-1</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>

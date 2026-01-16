@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片加载测试 - 四叶草堂</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-item h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .image-info {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .testing { background: #fff3cd; color: #856404; }
+        img {
+            max-width: 300px;
+            max-height: 200px;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+        }
+        img.error {
+            background: #ffebee;
+            padding: 20px;
+            border: 2px dashed #f44336;
+            color: #f44336;
+        }
+        .test-url {
+            font-family: monospace;
+            background: #f8f9fa;
+            padding: 5px;
+            border-radius: 3px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 四叶草堂图片加载测试</h1>
+    
+    <div class="test-container">
+        <h2>测试目的</h2>
+        <p>这个页面专门用来测试网站中图片的加载情况，帮助诊断图片显示问题。</p>
+        <p><strong>如果看到图片正常显示，说明图片文件本身没有问题。</strong></p>
+    </div>
+
+    <div class="test-container">
+        <h2>🔍 图片加载测试结果</h2>
+        <div id="testResults">正在测试图片加载...</div>
+    </div>
+
+    <div class="test-container">
+        <h2>📊 测试统计</h2>
+        <div id="statistics">初始化统计...</div>
+    </div>
+
+    <script>
+        // 定义要测试的图片列表
+        const testImages = [
+            {
+                name: '四叶草堂LOGO',
+                url: 'images/四叶草堂LOGO.png',
+                description: '网站Logo图片'
+            },
+            {
+                name: '同济实验室logo',
+                url: 'images/同济实验室logo.png',
+                description: '同济实验室标志'
+            },
+            {
+                name: '团队集体照',
+                url: 'images/团队集体照.jpg',
+                description: '团队合影'
+            },
+            {
+                name: 'Z9CCTV4创智农园',
+                url: 'images/Z9CCTV4创智农园.png',
+                description: '创智农园项目图片'
+            },
+            {
+                name: 'z6第一财经',
+                url: 'images/z6第一财经.JPG',
+                description: '第一财经报道'
+            },
+            {
+                name: 'z7央视一线调研',
+                url: 'images/z7央视一线调研.jpeg',
+                description: '央视调研报道'
+            },
+            {
+                name: '三联人文',
+                url: 'images/三联人文.png',
+                description: '三联人文城市奖'
+            },
+            {
+                name: '范浩阳',
+                url: 'images/范浩阳.png',
+                description: '范浩阳照片'
+            }
+        ];
+
+        let testStats = {
+            total: 0,
+            success: 0,
+            failed: 0,
+            testing: 0
+        };
+
+        function updateStatistics() {
+            document.getElementById('statistics').innerHTML = `
+                <p>📈 <strong>总测试图片:</strong> ${testStats.total}</p>
+                <p>✅ <strong>成功加载:</strong> ${testStats.success}</p>
+                <p>❌ <strong>加载失败:</strong> ${testStats.failed}</p>
+                <p>🔄 <strong>正在测试:</strong> ${testStats.testing}</p>
+                <p>📊 <strong>成功率:</strong> ${testStats.total > 0 ? ((testStats.success / testStats.total) * 100).toFixed(1) : 0}%</p>
+            `;
+        }
+
+        function createTestItem(image) {
+            const div = document.createElement('div');
+            div.className = 'test-item';
+            div.innerHTML = `
+                <h3>${image.name}</h3>
+                <p class="image-info">${image.description}</p>
+                <p class="test-url">测试URL: ${image.url}</p>
+                <div class="status testing">🔄 正在测试...</div>
+                <img id="img-${image.name}" src="" alt="加载中..." style="display: none;">
+                <div id="error-${image.name}" class="error" style="display: none;">
+                    ❌ 图片加载失败
+                </div>
+            `;
+            return div;
+        }
+
+        function testImage(image) {
+            testStats.testing++;
+            updateStatistics();
+
+            const img = document.getElementById(`img-${image.name}`);
+            const errorDiv = document.getElementById(`error-${image.name}`);
+            const statusDiv = img.parentElement.querySelector('.status');
+
+            // 创建图片对象
+            const testImg = new Image();
+            
+            testImg.onload = function() {
+                testStats.testing--;
+                testStats.success++;
+                testStats.total++;
+                updateStatistics();
+
+                statusDiv.className = 'status success';
+                statusDiv.textContent = '✅ 加载成功';
+                img.src = image.url;
+                img.style.display = 'block';
+                errorDiv.style.display = 'none';
+            };
+
+            testImg.onerror = function() {
+                testStats.testing--;
+                testStats.failed++;
+                testStats.total++;
+                updateStatistics();
+
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '❌ 加载失败';
+                img.style.display = 'none';
+                errorDiv.style.display = 'block';
+                
+                // 尝试用fetch检查图片是否存在
+                fetch(image.url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP ${response.status}`);
+                        }
+                        return response.blob();
+                    })
+                    .then(blob => {
+                        errorDiv.innerHTML += `<br><small>文件存在但无法显示，错误码: ${response.status}</small>`;
+                    })
+                    .catch(err => {
+                        errorDiv.innerHTML += `<br><small>网络错误: ${err.message}</small>`;
+                    });
+            };
+
+            // 开始测试
+            testImg.src = image.url;
+        }
+
+        function startTests() {
+            const resultsDiv = document.getElementById('testResults');
+            resultsDiv.innerHTML = '';
+            
+            testStats = {
+                total: 0,
+                success: 0,
+                failed: 0,
+                testing: 0
+            };
+
+            testImages.forEach(image => {
+                const testItem = createTestItem(image);
+                resultsDiv.appendChild(testItem);
+                testImage(image);
+            });
+
+            updateStatistics();
+        }
+
+        // 页面加载完成后开始测试
+        document.addEventListener('DOMContentLoaded', function() {
+            startTests();
+        });
+    </script>
+</body>
+</html>

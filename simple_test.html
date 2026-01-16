@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单图片测试 - 四叶草堂</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f0f8ff;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 { color: #2c3e50; text-align: center; }
+        h2 { color: #34495e; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .image-test {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #e74c3c;
+            border-radius: 5px;
+            background: #fef9f9;
+        }
+        .image-test img {
+            max-width: 100%;
+            max-height: 300px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .status {
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .loading { background: #fff3cd; color: #856404; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .test-url {
+            background: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 四叶草堂图片加载测试</h1>
+    
+    <div class="test-section">
+        <h2>📋 测试说明</h2>
+        <p>这个页面专门测试几张关键图片的加载情况，帮助诊断图片显示问题。</p>
+        <p><strong>如果所有测试图片都正常显示，说明图片文件本身没有问题。</strong></p>
+    </div>
+
+    <div class="test-section">
+        <h2>🎯 关键图片测试</h2>
+        
+        <div class="image-test">
+            <h3>测试 1: 四叶草堂LOGO</h3>
+            <div class="test-url">路径: images/四叶草堂LOGO.png</div>
+            <div class="status loading" id="status1">🔄 正在加载...</div>
+            <img id="img1" src="images/四叶草堂LOGO.png" alt="四叶草堂LOGO" style="display: none;">
+            <div id="error1" class="error" style="display: none;">❌ 图片加载失败</div>
+        </div>
+
+        <div class="image-test">
+            <h3>测试 2: 团队集体照</h3>
+            <div class="test-url">路径: images/团队集体照.jpg</div>
+            <div class="status loading" id="status2">🔄 正在加载...</div>
+            <img id="img2" src="images/团队集体照.jpg" alt="团队集体照" style="display: none;">
+            <div id="error2" class="error" style="display: none;">❌ 图片加载失败</div>
+        </div>
+
+        <div class="image-test">
+            <h3>测试 3: Z9CCTV4创智农园</h3>
+            <div class="test-url">路径: images/Z9CCTV4创智农园.png</div>
+            <div class="status loading" id="status3">🔄 正在加载...</div>
+            <img id="img3" src="images/Z9CCTV4创智农园.png" alt="创智农园" style="display: none;">
+            <div id="error3" class="error" style="display: none;">❌ 图片加载失败</div>
+        </div>
+
+        <div class="image-test">
+            <h3>测试 4: z6第一财经</h3>
+            <div class="test-url">路径: images/z6第一财经.JPG</div>
+            <div class="status loading" id="status4">🔄 正在加载...</div>
+            <img id="img4" src="images/z6第一财经.JPG" alt="第一财经" style="display: none;">
+            <div id="error4" class="error" style="display: none;">❌ 图片加载失败</div>
+        </div>
+
+        <div class="image-test">
+            <h3>测试 5: 同济实验室logo</h3>
+            <div class="test-url">路径: images/同济实验室logo.png</div>
+            <div class="status loading" id="status5">🔄 正在加载...</div>
+            <img id="img5" src="images/同济实验室logo.png" alt="同济实验室" style="display: none;">
+            <div id="error5" class="error" style="display: none;">❌ 图片加载失败</div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 测试结果</h2>
+        <div id="finalResult">等待测试完成...</div>
+    </div>
+
+    <script>
+        // 测试图片加载函数
+        function testImage(imageId, url) {
+            const img = document.getElementById('img' + imageId);
+            const status = document.getElementById('status' + imageId);
+            const error = document.getElementById('error' + imageId);
+
+            const testImg = new Image();
+            
+            testImg.onload = function() {
+                status.className = 'status success';
+                status.textContent = '✅ 加载成功';
+                img.style.display = 'block';
+                error.style.display = 'none';
+                
+                console.log(`图片 ${imageId} 加载成功: ${url}`);
+            };
+
+            testImg.onerror = function() {
+                status.className = 'status error';
+                status.textContent = '❌ 加载失败';
+                img.style.display = 'none';
+                error.style.display = 'block';
+                
+                console.error(`图片 ${imageId} 加载失败: ${url}`);
+                
+                // 尝试获取更详细的错误信息
+                fetch(url, { method: 'HEAD' })
+                    .then(response => {
+                        error.innerHTML = `❌ 图片加载失败<br><small>HTTP状态: ${response.status}</small>`;
+                    })
+                    .catch(err => {
+                        error.innerHTML = `❌ 图片加载失败<br><small>网络错误: ${err.message}</small>`;
+                    });
+            };
+
+            // 开始测试
+            testImg.src = url;
+        }
+
+        // 页面加载完成后开始测试
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('开始图片加载测试...');
+            
+            // 测试所有图片
+            testImage(1, 'images/四叶草堂LOGO.png');
+            testImage(2, 'images/团队集体照.jpg');
+            testImage(3, 'images/Z9CCTV4创智农园.png');
+            testImage(4, 'images/z6第一财经.JPG');
+            testImage(5, 'images/同济实验室logo.png');
+            
+            // 5秒后显示最终结果
+            setTimeout(function() {
+                const successCount = document.querySelectorAll('.success').length;
+                const totalCount = 5;
+                const result = document.getElementById('finalResult');
+                
+                if (successCount === totalCount) {
+                    result.innerHTML = `
+                        <div class="status success">
+                            🎉 测试完成！所有 ${totalCount} 张测试图片都正常加载！
+                            <br><br>
+                            <strong>结论：图片文件本身没有问题，问题可能在其他地方：</strong>
+                            <ul>
+                                <li>服务器配置问题</li>
+                                <li>浏览器缓存问题</li>
+                                <li>HTML页面中的图片引用问题</li>
+                                <li>网络连接问题</li>
+                            </ul>
+                        </div>
+                    `;
+                } else {
+                    result.innerHTML = `
+                        <div class="status error">
+                            ⚠️ 测试完成！只有 ${successCount}/${totalCount} 张图片正常加载。
+                            <br><br>
+                            <strong>建议检查：</strong>
+                            <ul>
+                                <li>确认所有图片文件都已上传到服务器</li>
+                                <li>检查文件路径是否正确</li>
+                                <li>验证服务器MIME类型配置</li>
+                                <li>清除浏览器缓存重试</li>
+                            </ul>
+                        </div>
+                    `;
+                }
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
