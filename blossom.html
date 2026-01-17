@@ -113,6 +113,34 @@
             transition: width 0.3s ease;
         }
 
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 8px;
+            gap: 4px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-gray);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
         /* Hero Section */
         .hero {
             position: relative;
@@ -200,9 +228,10 @@
         }
 
         .intro-content {
-            max-width: 900px;
+            max-width: 100%;
             margin: 0 auto;
             text-align: center;
+            padding: 0;
         }
 
         .intro-content h3 {
@@ -224,7 +253,52 @@
             display: flex;
             justify-content: center;
             gap: 25px;
-            margin-top: 40px;
+            margin-top: 30px;
+        }
+
+        /* 全屏地图样式 */
+        .full-width-map {
+            margin: 50px 0;
+            text-align: center;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .full-width-map img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .full-width-map img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* 小标题文字样式 */
+        .special-message {
+            text-align: center;
+            margin: 60px auto;
+            max-width: 800px;
+        }
+
+        .special-message p {
+            font-size: 18px !important;
+            font-weight: 500 !important;
+            line-height: 1.6 !important;
+            color: var(--primary-green) !important;
+            margin: 0 !important;
+            font-family: 'Noto Serif SC', serif !important;
+            letter-spacing: 2px;
+            text-align: center;
         }
 
         .intro-button {
@@ -381,11 +455,10 @@
         }
 
         .edition-theme p {
-            font-size: 18px;
-            font-weight: 500;
-            color: var(--text-dark);
-            line-height: 1.8;
-            max-width: 700px;
+            font-size: 15px;
+            line-height: 2;
+            color: var(--text-gray);
+            max-width: 800px;
             margin: 0 auto;
         }
 
@@ -419,7 +492,7 @@
         }
 
         .edition-philosophy {
-            background: var(--white);
+            background: var(--bg-light);
             padding: 40px;
             border-radius: 15px;
             margin: 50px 0;
@@ -660,6 +733,24 @@
 
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 4px 20px var(--shadow);
+                gap: 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
             }
 
             section {
@@ -684,8 +775,33 @@
                 align-items: center;
             }
 
-            .map-stats,
+            .map-stats {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                gap: 15px;
+                overflow-x: auto;
+            }
+
+            .stat-item {
+                flex-shrink: 0;
+                min-width: calc(25% - 10px);
+            }
+
             .edition-stats {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                gap: 15px;
+                overflow-x: auto;
+            }
+
+            .edition-stat {
+                flex-shrink: 0;
+                min-width: calc(20% - 10px);
+            }
+
+            .participation-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -693,22 +809,45 @@
                 flex-direction: column;
                 gap: 25px;
             }
+
+            /* 移动端调整 */
+            .intro-content {
+                padding: 0 20px;
+            }
+
+            .full-width-map {
+                margin: 20px -20px;
+            }
+
+            .special-message {
+                margin: 30px 20px;
+                padding: 25px 20px;
+            }
+
+            .special-message p {
+                font-size: 14px !important;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="navbar-logo">
+        <div class="navbar-logo" style="cursor: pointer;" onclick="window.location.href='index.html'">
             <img src="images/四叶草堂LOGO.png" alt="四叶草堂">
             <span class="navbar-logo-text">四叶草堂</span>
         </div>
-        <ul class="nav-links">
+        <ul class="nav-links" id="navLinks">
             <li><a href="index.html">团队介绍</a></li>
             <li><a href="philosophy.html">理念路径</a></li>
             <li><a href="projects.html">项目业务</a></li>
             <li><a href="blossom.html" class="active">花开中国</a></li>
         </ul>
+        <div class="mobile-menu-btn" id="mobileMenuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
 
     <!-- Hero Section -->
@@ -729,6 +868,9 @@
             </a>
             <p>从社区花园到社区规划和城乡发展，我们在实体空间、网络媒体、新闻报道中可见越来越多的社区花园出现。从2022年开始，团队通过团"园"行动，组建SEEDING联盟来发动旨在重建信任、种下希望的社区花园邻里守望互助公益计划，并以此为基础建立了全国社区花园地图共建资料库，至今仍在更新中。</p>
             <p>如果您有新的社区花园信息，也欢迎点击下方按钮一起来完善，感谢您的支持与助力！</p>
+            <div class="full-width-map">
+                <img src="images/全国社区花园地图.jpg" alt="全国社区花园地图">
+            </div>
             <div class="intro-buttons">
                 <a href="https://y1f9d2c3dwo.feishu.cn/wiki/DfLfw0XHeifoHmkJQWUc00rAnzf" target="_blank" class="intro-button">我要提供社区花园信息</a>
             </div>
@@ -820,8 +962,11 @@
                 <p>全国社区花园行动不仅是对风景园林学科实践路径的转型探索，也是对传统教育模式的一次革新。学生们在实践中学习、在合作中成长，为社区带来改变的同时，也为个人发展开拓了新路径。</p>
             </div>
 
-            <div style="text-align: center; margin-top: 50px;">
-                <p style="font-size: 16px; font-weight: 500; color: var(--primary-green);">我们相信，每个人都有改变社区的力量。我们邀请每一位关心社区、热爱生活的市民加入我们的行列。</p>
+            <div class="special-message">
+                <p>我们相信，每个人都有改变社区的力量。我们邀请每一位关心社区、热爱生活的市民加入我们的行列。</p>
+            </div>
+            <div class="awards-table" style="margin-top: 40px; text-align: center;">
+                <img src="images/第5届得奖名单一览表.png" alt="第5届得奖名单一览表" style="width: 100%; max-width: 100%; height: auto; border-radius: 12px;">
             </div>
         </div>
     </section>
@@ -966,6 +1111,23 @@
             } else {
                 navbar.style.background = 'rgba(255, 255, 255, 0.95)';
             }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
         });
     </script>
 </body>
